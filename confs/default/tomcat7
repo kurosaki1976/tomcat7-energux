@@ -1,0 +1,5 @@
+TOMCAT7_USER=tomcat7
+TOMCAT7_GROUP=tomcat7
+JAVA_HOME=/usr/lib/jvm/default-java
+JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
+AUTHBIND=yes
