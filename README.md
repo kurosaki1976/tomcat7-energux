@@ -29,7 +29,8 @@ Definir usuario con acceso administrativo.
 ```bash
 mv /etc/tomcat7/tomcat-users.xml{,.org}
 nano /etc/tomcat7/tomcat-users.xml
-
+```
+```xml
 <?xml version='1.0' encoding='utf-8'?>
 <tomcat-users>
 	<role rolename="admin-gui"/>
@@ -146,10 +147,9 @@ Editando el fichero de configuración global del servidor `/etc/tomcat7/server.x
 
 ```bash
 cp /etc/tomcat7/server.xml{,.org}
+nano /etc/tomcat7/server.xml
 ```
 ```xml
-nano /etc/tomcat7/server.xml
-
 <Connector port="80" protocol="HTTP/1.1"
 			connectionTimeout="20000"
 			URIEncoding="UTF-8"
@@ -172,7 +172,8 @@ Editar el fichero `/etc/tomcat7/web.xml` y agregar dentro de la sección `<web-a
 ```bash
 cp /etc/tomcat7/web.xml{,.org}
 nano /etc/tomcat7/web.xml
-
+```
+```xml
 <security-constraint>
 	<web-resource-collection>
 		<web-resource-name>HTTPSOnly</web-resource-name>
