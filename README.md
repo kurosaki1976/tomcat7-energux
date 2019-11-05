@@ -18,13 +18,15 @@ El hecho de que Tomcat fue escrito en Java, hace posible que funcione en cualqui
 
 ## Instalar paquetes necesarios
 
-`apt-get install tomcat7 tomcat7-admin openjdk-7-jdk postgresql`
+```bash
+apt-get install tomcat7 tomcat7-admin openjdk-7-jdk postgresql
+```
 
 ## Configuración del servicio `tomcat7`
 
 Definir usuario con acceso administrativo.
 
-```
+```bash
 mv /etc/tomcat7/tomcat-users.xml{,.org}
 nano /etc/tomcat7/tomcat-users.xml
 
@@ -38,7 +40,7 @@ nano /etc/tomcat7/tomcat-users.xml
 
 Establecer límites de uso de memoria para la máquina virtual de `Java`.
 
-```
+```bash
 nano /usr/share/tomcat7/bin/setenv.sh
 
 JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
@@ -46,7 +48,7 @@ JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
 
 o editar el fichero `/etc/default/tomcat7` como sigue:
 
-```
+```bash
 mv /etc/default/tomcat7{,.org}
 nano /etc/default/tomcat7
 
@@ -60,7 +62,7 @@ JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
 
 Asignar contraseña al usuario `postgres` y crear la base de datos para EnerguX.
 
-```
+```bash
 su - postgres -c psql
 \password postgres
 CREATE DATABASE energux WITH TEMPLATE template0 ENCODING 'UNICODE';
@@ -68,7 +70,7 @@ CREATE DATABASE energux WITH TEMPLATE template0 ENCODING 'UNICODE';
 
 Reiniciar los servicios `tomcat7` y `postgresql`.
 
-```
+```bash
 service tomcat7 restart
 service postgresql restart
 ```
@@ -79,7 +81,9 @@ Acceder a la URL `http://localhost:8080/manager/html` en un navegador y agregar 
 
 Definir usuario del sistema `tomcat7` como dueño del directorio de la aplicación.
 
-`chown –R tomcat7:tomcat7 /var/lib/tomcat7/webapps/energux/`
+```bash
+chown –R tomcat7:tomcat7 /var/lib/tomcat7/webapps/energux/
+```
 
 ## Actualizar hasta EnerguX v.4.0.1.5
 
@@ -93,11 +97,13 @@ Si EnerguX corre en un servidor web independiente y se quiere que las peticiones
 
 * Instalar paquetes necesarios
 
-`apt-get install authbind`
+```bash
+apt-get install authbind
+```
 
 * Configurar el servicio `tomcat7`
 
-```
+```bash
 nano /etc/default/tomcat7
 
 TOMCAT7_USER=tomcat7
@@ -109,7 +115,7 @@ AUTHBIND=YES
 
 Crear ficheros necesarios y asignar permisos
 
-```
+```bash
 touch /etc/authbind/byport/{80,443}
 chmod 0755 /etc/authbind/byport/*
 chown tomcat7:tomcat7 /etc/authbind/byport/*
@@ -117,7 +123,7 @@ chown tomcat7:tomcat7 /etc/authbind/byport/*
 
 Crear certificado Java a partir de certificado TLS autofirmado y asignar permisos necesarios
 
-```
+```bash
 openssl req -x509 -sha512 -days 3650 -nodes \
 	-subj "/C=CU/ST=Provincia/L=Ciudad/O=Organización/OU=IT/CN=EnerguX/emailAddress=postmaster@dominio.cu/" \
 	-reqexts SAN -extensions SAN -config <(cat /etc/ssl/openssl.cnf \
@@ -138,8 +144,10 @@ Definir puertos de escucha
 
 Editando el fichero de configuración global del servidor `/etc/tomcat7/server.xml`, haciendo que las secciones `<Conector />` queden como se muestra debajo.
 
-```
+```bash
 cp /etc/tomcat7/server.xml{,.org}
+```
+```xml
 nano /etc/tomcat7/server.xml
 
 <Connector port="80" protocol="HTTP/1.1"
@@ -161,7 +169,7 @@ Establecer que el servidor sólo acepte conexiones bajo protocolo seguro
 
 Editar el fichero `/etc/tomcat7/web.xml` y agregar dentro de la sección `<web-app>` el siguiente contenido.
 
-```
+```bash
 cp /etc/tomcat7/web.xml{,.org}
 nano /etc/tomcat7/web.xml
 
@@ -182,7 +190,7 @@ Reiniciar el servicio `tomcat7` y probar accediendo al EnerguX a través de la U
 
 Si se desea que EnerguX sea la aplicación web por defecto de Tomcat, es decir que solo sea necesario teclear la dirección `http://localhost/` y no `http://localhost/energux`; se debe hacer lo siguiente:
 
-```
+```bash
 cd /var/lib/tomcat7/webapps
 mv ROOT/ TOMCAT7/
 mv energux/ ROOT/
@@ -193,7 +201,7 @@ service tomcat7 restart
 
 Opcionalmente se puede crear un script de salvas, usando el ejemplo que se muestra debajo o una versión personalizada.
 
-```
+```bash
 nano /usr/local/bin/energux_db_backup.sh
 
 #!/bin/bash
@@ -208,12 +216,11 @@ else
 	pg_dump energux -h localhost -E UTF8 -U postgres -w -v -f $BDIR/$(date +%B)/$FILENAME
 fi
 exit 0
-
 ```
 
 Crear archivo `.pgpass` en el directorio `home` del usuario `root`
 
-```
+```bash
 nano /root/.pgpass
 
 localhost:5432:energux:postgres:passwd
@@ -221,11 +228,13 @@ localhost:5432:energux:postgres:passwd
 
 * Asignar atributos de ejecución
 
-`chmod +x /usr/local/bin/energux_db_backup.sh`
+```bash
+chmod +x /usr/local/bin/energux_db_backup.sh
+```
 
 * Definir horario de ejecución
 
-```
+```bash
 nano /etc/crontab
 
 # EnerguX Database Daily Backup
@@ -234,7 +243,9 @@ nano /etc/crontab
 
 * Reiniciar el servicio `cron`
 
-`service cron restart`
+```bash
+service cron restart
+```
 
 ## Conclusiones
 
