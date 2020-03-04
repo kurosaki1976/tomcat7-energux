@@ -59,7 +59,7 @@ JAVA_HOME=/usr/lib/jvm/default-java
 JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
 ```
 
-> **Nota**: Estos parámetros fueron pensados para un servidor o CT/VM corriendo con al menos 768Mb de memoria RAM.
+> **NOTA**: Estos parámetros fueron pensados para un servidor o CT/VM corriendo con al menos 768Mb de memoria RAM.
 
 Asignar contraseña al usuario `postgres` y crear la base de datos para EnerguX.
 
