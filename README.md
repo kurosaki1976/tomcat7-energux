@@ -59,7 +59,7 @@ JAVA_HOME=/usr/lib/jvm/default-java
 JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
 ```
 
-* Nota: Estos parámetros fueron pensados para un servidor o CT/VM corriendo con al menos 768Mb de memoria RAM.
+> **Nota**: Estos parámetros fueron pensados para un servidor o CT/VM corriendo con al menos 768Mb de memoria RAM.
 
 Asignar contraseña al usuario `postgres` y crear la base de datos para EnerguX.
 
@@ -89,6 +89,8 @@ chown –R tomcat7:tomcat7 /var/lib/tomcat7/webapps/energux/
 ## Actualizar hasta EnerguX v.4.0.1.5
 
 Reemplazar el sitio por defecto con lo contenido dentro de los archivos compactados `sitio.rar` e ir ejecutando los scripts `update_4_0_x.sql` y `update_4_0_1_x.sql` en el servidor `postgresql` mediante las aplicaciones de escritorio pgAdminIII, pgAdmin4 o la consola `psql`; al finalizar reiniciar el servicio `tomcat7`.
+
+> **NOTA**: Para trabajar con una base de datos inicalizada en cero y que contiene todos los `scripts` de actualización, se debe hacer una restaura usando el fichero [energux_2019_2_19.backup](confs/energux_2019_2_19.backup).
 
 Abrir la dirección `http://localhost:8080/energux` acceder con el par `admin/admin` como `usuario/contraseña` y enviar el Número Serie del Producto a los especialistas de Desoft para obtener un Número de Licencia válido. Una vez obtenido, introducirlo y comenzar a explotar la aplicación.
 
