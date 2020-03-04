@@ -250,7 +250,7 @@ service cron restart
 
 ## Conclusiones
 
-Aunque EnerguX utiliza versiones de `Apache Tomcat` un tanto obsoletas; es invaluable la importancia de un proyecto de esta embargadura dentro del sistema empresarial e incluso privado, en Cuba. Esperamos que este tutorial sirva de guía para su implementación en aquellos escenarios donde se lleve a cabo la migración de servicios a plataformas bajo software libre, apuesta hoy del país en la búsqueda de la independencia y soberanía tecnológicas.
+Aunque EnerguX utiliza versiones de `Apache Tomcat` un tanto obsoletas; es invaluable la importancia de un proyecto de esta embergadura dentro del sistema empresarial e incluso privado, en Cuba. Esperamos que este tutorial sirva de guía para su implementación en aquellos escenarios donde se lleve a cabo la migración de servicios a plataformas bajo software libre, apuesta hoy del país en la búsqueda de la independencia y soberanía tecnológicas.
 
 ## Referencias
 
