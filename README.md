@@ -22,6 +22,12 @@ El hecho de que Tomcat fue escrito en Java, hace posible que funcione en cualqui
 apt-get install tomcat7 tomcat7-admin openjdk-7-jdk postgresql
 ```
 
+Evitar futuras actualizaciones de los paquetes
+
+```bash
+apt-mark hold tomcat7 tomcat7-admin tomcat7-common openjdk-7-jdk openjdk-7-jre openjdk-7-jre-headless postgresql-client postgresql-client-12 postgresql-client-common libtomcat7-java
+```
+
 ## Configuración del servicio `tomcat7`
 
 Definir usuario con acceso administrativo.
