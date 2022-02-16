@@ -39,9 +39,8 @@ nano /etc/tomcat7/tomcat-users.xml
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
 <tomcat-users>
-	<role rolename="admin-gui"/>
 	<role rolename="manager-gui"/>
-	<user username="admin" password="passwd" roles="admin-gui,manager-gui"/>
+	<user username="admin" password="passwd" roles="manager-gui"/>
 </tomcat-users>
 ```
 
