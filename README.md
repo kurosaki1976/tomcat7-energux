@@ -92,7 +92,7 @@ service postgresql restart
 
 - Acceder a la URL `http://ip-fqdn-servidor:8080/manager/html` en un navegador y agregar el fichero `energux.war`.
 
-> **NOTA**: Se deben incrementar primero los valores de los parámetros `Max-File Size` y `Max Request Size`, definidos por defecto en 50Mb. Para ello editar el fichero `/usr/share/tomcat7-admin/manager/WEB-INF/web.xml` y en la sección `<multipart-config>` establecer valores acordes al tamaño de la aplicación a desplegar, en el caso de `energux.war`, se recomienda definir `104857600` equivalente a 100Mb en ambos parámetros.
+  > **NOTA**: Se deben incrementar primero los valores de los parámetros `Max-File Size` y `Max Request Size`, definidos por defecto en 50Mb. Para ello editar el fichero `/usr/share/tomcat7-admin/manager/WEB-INF/web.xml` y en la sección `<multipart-config>` establecer valores acordes al tamaño de la aplicación a desplegar, en el caso de `energux.war`, se recomienda definir `104857600` equivalente a 100Mb en ambos parámetros.
 
 - Definir usuario del sistema `tomcat7` como dueño del directorio de la aplicación.
 
