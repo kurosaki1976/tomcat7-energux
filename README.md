@@ -39,8 +39,11 @@ nano /etc/tomcat7/tomcat-users.xml
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
 <tomcat-users>
-	<role rolename="manager-gui"/>
-	<user username="admin" password="passwd" roles="manager-gui"/>
+  <role rolename="admin"/>
+  <role rolename="manager"/>
+  <role rolename="manager-gui"/>
+  <role rolename="admin-gui"/>
+  <user username="tomcat" password="energux" roles="admin,manager,manager-gui,admin-gui"/>
 </tomcat-users>
 ```
 
@@ -60,7 +63,7 @@ nano /etc/default/tomcat7
 
 TOMCAT7_USER=tomcat7
 TOMCAT7_GROUP=tomcat7
-JAVA_HOME=/usr/lib/jvm/default-java
+JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
 ```
 
@@ -83,7 +86,7 @@ service postgresql restart
 
 ## Instalar EnerguX v4
 
-Acceder a la URL `http://localhost:8080/manager/html` en un navegador y agregar el fichero `energux.war`. Completar el proceso de instalación a través de `http://localhost:8080/energux/app/instalar.jsf`.
+Acceder a la URL `http://ip-fqdn-servidor:8080/manager/html` en un navegador y agregar el fichero `energux.war`. Completar el proceso de instalación a través de `http://ip-fqdn-servidor:8080/energux/app/instalar.jsf`.
 
 Definir usuario del sistema `tomcat7` como dueño del directorio de la aplicación.
 
@@ -97,7 +100,7 @@ Reemplazar el sitio por defecto con lo contenido dentro de los archivos compacta
 
 > **NOTA**: Para trabajar con una base de datos inicalizada en cero y que contiene todos los `scripts` de actualización, se debe hacer una restaura usando el fichero [energux_2019_2_19.backup](confs/energux_2019_2_19.backup).
 
-Abrir la dirección `http://localhost:8080/energux` acceder con el par `admin/admin` como `usuario/contraseña` y enviar el Número Serie del Producto a los especialistas de Desoft para obtener un Número de Licencia válido. Una vez obtenido, introducirlo y comenzar a explotar la aplicación.
+Abrir la dirección `http://ip-fqdn-servidor:8080/energux` acceder con el par `admin/admin` como `usuario/contraseña` y enviar el Número Serie del Producto a los especialistas de Desoft para obtener un Número de Licencia válido. Una vez obtenido, introducirlo y comenzar a explotar la aplicación.
 
 ## Modificar puertos de escucha por defecto
 
@@ -116,7 +119,7 @@ nano /etc/default/tomcat7
 
 TOMCAT7_USER=tomcat7
 TOMCAT7_GROUP=tomcat7
-JAVA_HOME=/usr/lib/jvm/default-java
+JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
 AUTHBIND=YES
 ```
