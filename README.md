@@ -38,12 +38,16 @@ nano /etc/tomcat7/tomcat-users.xml
 ```
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
+
+<?xml version='1.0' encoding='utf-8'?>
 <tomcat-users>
   <role rolename="admin"/>
   <role rolename="manager"/>
   <role rolename="manager-gui"/>
   <role rolename="admin-gui"/>
-  <user username="tomcat" password="energux" roles="admin,manager,manager-gui,admin-gui"/>
+  <role rolename="manager-script"/>
+  <role rolename="manager-jmx"/>
+  <user username="tomcat" password="energux" roles="admin,manager,manager-gui,admin-gui,manager-script,manager-jmx"/>
 </tomcat-users>
 ```
 
@@ -52,7 +56,7 @@ Establecer límites de uso de memoria para la máquina virtual de `Java`.
 ```bash
 nano /usr/share/tomcat7/bin/setenv.sh
 
-JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
+JAVA_OPTS="-Xms320m -Xmx768m -XX:MaxPermSize=768m"
 ```
 
 o editar el fichero `/etc/default/tomcat7` como sigue:
@@ -64,10 +68,10 @@ nano /etc/default/tomcat7
 TOMCAT7_USER=tomcat7
 TOMCAT7_GROUP=tomcat7
 JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
-JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
+JAVA_OPTS="-Xms320m -Xmx768m -XX:MaxPermSize=768m"
 ```
 
-> **NOTA**: Estos parámetros fueron pensados para un servidor o CT/VM corriendo con al menos 768Mb de memoria RAM.
+> **NOTA**: Estos parámetros fueron pensados para un servidor o CT/VM corriendo con al menos 1Gb de memoria RAM.
 
 Asignar contraseña al usuario `postgres` y crear la base de datos para EnerguX.
 
