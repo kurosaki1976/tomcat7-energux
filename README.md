@@ -86,13 +86,17 @@ service postgresql restart
 
 ## Instalar EnerguX v4
 
-Acceder a la URL `http://ip-fqdn-servidor:8080/manager/html` en un navegador y agregar el fichero `energux.war`. Completar el proceso de instalación a través de `http://ip-fqdn-servidor:8080/energux/app/instalar.jsf`.
+- Acceder a la URL `http://ip-fqdn-servidor:8080/manager/html` en un navegador y agregar el fichero `energux.war`.
 
-Definir usuario del sistema `tomcat7` como dueño del directorio de la aplicación.
+> **NOTA**: Se deben incrementar primero los valores de los parámetros `Max-File Size` y `Max Request Size`, definidos por defecto en 50Mb. Para ello editar el fichero `/usr/share/tomcat7-admin/manager/WEB-INF/web.xml` y en la sección `<multipart-config>` establecer valores acordes al tamaño de la aplicación a desplegar, en el caso de `energux.war`, se recomienda definir `104857600` equivalente a 100Mb en ambos parámetros.
+
+- Definir usuario del sistema `tomcat7` como dueño del directorio de la aplicación.
 
 ```bash
 chown –R tomcat7:tomcat7 /var/lib/tomcat7/webapps/energux/
 ```
+
+- Completar el proceso de instalación a través de `http://ip-fqdn-servidor:8080/energux/app/instalar.jsf`.
 
 ## Actualizar hasta EnerguX v.4.0.1.5
 
