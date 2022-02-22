@@ -1,4 +1,4 @@
-# Instalando aplicación web EnerguX "Control de Portadores Energéticos" en Debian 8 Jessie
+# Instalando aplicación web EnerguX "Control de Portadores Energéticos" en Debian 9 Stretch
 
 ## Autor
 
@@ -19,26 +19,24 @@ El hecho de que Tomcat fue escrito en Java, hace posible que funcione en cualqui
 ## Instalar paquetes necesarios
 
 ```bash
-apt-get install tomcat7 tomcat7-admin openjdk-7-jdk postgresql
+apt install tomcat8 tomcat8-admin openjdk-8-jdk postgresql
 ```
 
 Evitar futuras actualizaciones de los paquetes
 
 ```bash
-apt-mark hold tomcat7 tomcat7-admin tomcat7-common openjdk-7-jdk openjdk-7-jre openjdk-7-jre-headless postgresql-client postgresql-client-common libtomcat7-java
+apt-mark hold tomcat8 tomcat8-admin tomcat8-common openjdk-8-jdk openjdk-8-jre openjdk-8-jre-headless postgresql-client postgresql-client-common libtomcat8-java
 ```
 
-## Configuración del servicio `tomcat7`
+## Configuración del servicio `tomcat8`
 
 Definir usuario con acceso administrativo.
 
 ```bash
-mv /etc/tomcat7/tomcat-users.xml{,.org}
-nano /etc/tomcat7/tomcat-users.xml
+mv /etc/tomcat8/tomcat-users.xml{,.org}
+nano /etc/tomcat8/tomcat-users.xml
 ```
 ```xml
-<?xml version='1.0' encoding='utf-8'?>
-
 <?xml version='1.0' encoding='utf-8'?>
 <tomcat-users>
   <role rolename="admin"/>
@@ -54,20 +52,20 @@ nano /etc/tomcat7/tomcat-users.xml
 Establecer límites de uso de memoria para la máquina virtual de `Java`.
 
 ```bash
-nano /usr/share/tomcat7/bin/setenv.sh
+nano /usr/share/tomcat8/bin/setenv.sh
 
 JAVA_OPTS="-Xms320m -Xmx768m -XX:MaxPermSize=768m"
 ```
 
-o editar el fichero `/etc/default/tomcat7` como sigue:
+o editar el fichero `/etc/default/tomcat8` como sigue:
 
 ```bash
-mv /etc/default/tomcat7{,.org}
+mv /etc/default/tomcat8{,.org}
 nano /etc/default/tomcat7
 
 TOMCAT7_USER=tomcat7
 TOMCAT7_GROUP=tomcat7
-JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 JAVA_OPTS="-Xms320m -Xmx768m -XX:MaxPermSize=768m"
 ```
 
@@ -81,14 +79,13 @@ su - postgres -c psql
 CREATE DATABASE energux WITH TEMPLATE template0 ENCODING 'UNICODE';
 ```
 
-Reiniciar los servicios `tomcat7` y `postgresql`.
+Reiniciar los servicios `tomcat8` y `postgresql`.
 
 ```bash
-service tomcat7 restart
-service postgresql restart
+systemctl restart tomcat8 postgresql
 ```
 
-## Instalar EnerguX v4
+## Instalar EnerguX v5
 
 - Acceder a la URL `http://ip-fqdn-servidor:8080/manager/html` en un navegador y agregar el fichero `energux.war`.
 
@@ -97,7 +94,7 @@ service postgresql restart
 - Definir usuario del sistema `tomcat7` como dueño del directorio de la aplicación.
 
 ```bash
-chown –R tomcat7:tomcat7 /var/lib/tomcat7/webapps/energux/
+chown –R tomcat8:tomcat8 /var/lib/tomcat8/webapps/energux/
 ```
 
 - Completar el proceso de instalación a través de `http://ip-fqdn-servidor:8080/energux/app/instalar.jsf`.
@@ -117,17 +114,17 @@ Si EnerguX corre en un servidor web independiente y se quiere que las peticiones
 * Instalar paquetes necesarios
 
 ```bash
-apt-get install authbind
+apt install authbind
 ```
 
-* Configurar el servicio `tomcat7`
+* Configurar el servicio `tomcat8`
 
 ```bash
-nano /etc/default/tomcat7
+nano /etc/default/tomcat8
 
-TOMCAT7_USER=tomcat7
-TOMCAT7_GROUP=tomcat7
-JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+TOMCAT7_USER=tomcat8
+TOMCAT7_GROUP=tomcat8
+JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 JAVA_OPTS="-Xms320m -Xmx512m -XX:MaxPermSize=512m"
 AUTHBIND=YES
 ```
@@ -156,15 +153,15 @@ openssl pkcs12 -export -out Energux.pkcs12 -in EnerguX-Server.crt -inkey EnerguX
 keytool -importkeystore -srckeystore EnerguX.pkcs12 -srcstoretype PKCS12 \
 	-destkeystore /usr/share/tomcat7/EnerguX.jks -deststoretype JKS
 
-chown tomcat7:tomcat7 /usr/share/tomcat7/EnerguX.jks
+chown tomcat8:tomcat8 /usr/share/tomcat7/EnerguX.jks
 ```
 
 Definir puertos de escucha
 
-Editando el fichero de configuración global del servidor `/etc/tomcat7/server.xml`, haciendo que las secciones `<Conector />` queden como se muestra debajo.
+Editando el fichero de configuración global del servidor `/etc/tomcat8/server.xml`, haciendo que las secciones `<Conector />` queden como se muestra debajo.
 
 ```bash
-cp /etc/tomcat7/server.xml{,.org}
+cp /etc/tomcat8/server.xml{,.org}
 nano /etc/tomcat7/server.xml
 ```
 ```xml
@@ -185,11 +182,11 @@ nano /etc/tomcat7/server.xml
 
 Establecer que el servidor sólo acepte conexiones bajo protocolo seguro
 
-Editar el fichero `/etc/tomcat7/web.xml` y agregar dentro de la sección `<web-app>` el siguiente contenido.
+Editar el fichero `/etc/tomcat8/web.xml` y agregar dentro de la sección `<web-app>` el siguiente contenido.
 
 ```bash
-cp /etc/tomcat7/web.xml{,.org}
-nano /etc/tomcat7/web.xml
+cp /etc/tomcat8/web.xml{,.org}
+nano /etc/tomcat8/web.xml
 ```
 ```xml
 <security-constraint>
@@ -203,17 +200,17 @@ nano /etc/tomcat7/web.xml
 </security-constraint>
 ```
 
-Reiniciar el servicio `tomcat7` y probar accediendo al EnerguX a través de la URL `http://localhost/energux`.
+Reiniciar el servicio `tomcat8` y probar accediendo al EnerguX a través de la URL `http://localhost/energux`.
 
 ## Definir aplicación por defecto
 
 Si se desea que EnerguX sea la aplicación web por defecto de Tomcat, es decir que solo sea necesario teclear la dirección `http://localhost/` y no `http://localhost/energux`; se debe hacer lo siguiente:
 
 ```bash
-cd /var/lib/tomcat7/webapps
+cd /var/lib/tomcat8/webapps
 mv ROOT/ TOMCAT7/
 mv energux/ ROOT/
-service tomcat7 restart
+systemctl restart tomcat8
 ```
 
 ## Realizar salvas automáticas de la base de datos
@@ -263,7 +260,7 @@ nano /etc/crontab
 * Reiniciar el servicio `cron`
 
 ```bash
-service cron restart
+systemctl restart cron
 ```
 
 ## Conclusiones
