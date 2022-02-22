@@ -63,8 +63,8 @@ o editar el fichero `/etc/default/tomcat8` como sigue:
 mv /etc/default/tomcat8{,.org}
 nano /etc/default/tomcat7
 
-TOMCAT7_USER=tomcat7
-TOMCAT7_GROUP=tomcat7
+TOMCAT7_USER=tomcat8
+TOMCAT7_GROUP=tomcat8
 JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 JAVA_OPTS="-Xms320m -Xmx768m -XX:MaxPermSize=768m"
 ```
@@ -134,7 +134,7 @@ Crear ficheros necesarios y asignar permisos
 ```bash
 touch /etc/authbind/byport/{80,443}
 chmod 0755 /etc/authbind/byport/*
-chown tomcat7:tomcat7 /etc/authbind/byport/*
+chown tomcat8:tomcat8 /etc/authbind/byport/*
 ```
 
 Crear certificado Java a partir de certificado TLS autofirmado y asignar permisos necesarios
@@ -143,17 +143,17 @@ Crear certificado Java a partir de certificado TLS autofirmado y asignar permiso
 openssl req -x509 -sha512 -days 3650 -nodes \
 	-subj "/C=CU/ST=Provincia/L=Ciudad/O=Organización/OU=IT/CN=EnerguX/emailAddress=postmaster@dominio.cu/" \
 	-reqexts SAN -extensions SAN -config <(cat /etc/ssl/openssl.cnf \
-		<(printf "\n[SAN]\nsubjectAltName=DNS:energux,DNS:energux.dominio.cu,DNS:localhost,IP:127.0.0.1")) \
-	-newkey rsa:2048 \
+		<(printf "\n[SAN]\nsubjectAltName=DNS:energux.dominio.cu,DNS:localhost,IP:192.168.0.1,IP:127.0.0.1")) \
+	-newkey rsa:4096 \
 	-keyout EnerguX-Server.key \
 	-out EnerguX-Server.crt
 
 openssl pkcs12 -export -out Energux.pkcs12 -in EnerguX-Server.crt -inkey EnerguX-Server.key
 
 keytool -importkeystore -srckeystore EnerguX.pkcs12 -srcstoretype PKCS12 \
-	-destkeystore /usr/share/tomcat7/EnerguX.jks -deststoretype JKS
+	-destkeystore /usr/share/tomcat8/EnerguX.jks -deststoretype JKS
 
-chown tomcat8:tomcat8 /usr/share/tomcat7/EnerguX.jks
+chown tomcat8:tomcat8 /usr/share/tomcat8/EnerguX.jks
 ```
 
 Definir puertos de escucha
@@ -162,7 +162,7 @@ Editando el fichero de configuración global del servidor `/etc/tomcat8/server.x
 
 ```bash
 cp /etc/tomcat8/server.xml{,.org}
-nano /etc/tomcat7/server.xml
+nano /etc/tomcat8/server.xml
 ```
 ```xml
 <Connector port="80" protocol="HTTP/1.1"
