@@ -98,7 +98,7 @@ systemctl restart tomcat8 postgresql
 - Definir usuario del sistema `tomcat8` como dueño del directorio de la aplicación y reiniciar el servicio.
 
 ```bash
-chown –R tomcat8:tomcat8 /var/lib/tomcat8/webapps/energux/
+chown -R tomcat8:tomcat8 /var/lib/tomcat8/webapps/energux/
 systemctl restart tomcat8
 ```
 
