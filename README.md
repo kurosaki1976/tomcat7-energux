@@ -89,9 +89,9 @@ systemctl restart tomcat8 postgresql
 
 - Acceder a la URL `http://ip-fqdn-servidor:8080/manager/html` en un navegador y agregar el fichero `energux.war`.
 
-  > **NOTA**: Se deben incrementar primero los valores de los parámetros `Max-File Size` y `Max Request Size`, definidos por defecto en 50Mb. Para ello editar el fichero `/usr/share/tomcat7-admin/manager/WEB-INF/web.xml` y en la sección `<multipart-config>` establecer valores acordes al tamaño de la aplicación a desplegar, en el caso de `energux.war`, se recomienda definir `104857600` equivalente a 100Mb en ambos parámetros.
+  > **NOTA**: Se deben incrementar primero los valores de los parámetros `Max-File Size` y `Max Request Size`, definidos por defecto en 50Mb. Para ello editar el fichero `/usr/share/tomcat8-admin/manager/WEB-INF/web.xml` y en la sección `<multipart-config>` establecer valores acordes al tamaño de la aplicación a desplegar, en el caso de `energux.war`, se recomienda definir `104857600` equivalente a 100Mb en ambos parámetros.
 
-- Definir usuario del sistema `tomcat7` como dueño del directorio de la aplicación.
+- Definir usuario del sistema `tomcat8` como dueño del directorio de la aplicación.
 
 ```bash
 chown –R tomcat8:tomcat8 /var/lib/tomcat8/webapps/energux/
@@ -208,7 +208,7 @@ Si se desea que EnerguX sea la aplicación web por defecto de Tomcat, es decir q
 
 ```bash
 cd /var/lib/tomcat8/webapps
-mv ROOT/ TOMCAT7/
+mv ROOT/ ROOT_ORG/
 mv energux/ ROOT/
 systemctl restart tomcat8
 ```
@@ -270,12 +270,7 @@ Aunque EnerguX utiliza versiones de `Apache Tomcat` un tanto obsoletas; es inval
 ## Referencias
 
 * [Productos | Desoft - EnerguX](https://www.desoft.cu/es/productos/159)
-* [Apache Tomcat 7 (7.0.94) - Tomcat Setup](https://tomcat.apache.org/tomcat-7.0-doc/setup.html)
-* [Apache Tomcat 7 Configuration Reference (7.0.94) - The HTTP](https://tomcat.apache.org/tomcat-7.0-doc/config/http.html)
-* [Cómo configurar HTTPS en Tomcat 7](https://mischorradas.nishilua.com/2018/02/como-configurar-https-en-tomcat-7/)
-* [Como crear un Certificado Autofirmado para Tomcat y Nginx](https://unpocodejava.com/2016/04/29/como-crear-un-certificado-autofirmado-para-tomcat-y-nginx/amp/)
+* [Apache Tomcat 8 Tomcat Setup](https://tomcat.apache.org/tomcat-8.5-doc/index.html)
+* [Apache Tomcat 8 Configuration Reference The HTTP Connector](https://tomcat.apache.org/tomcat-8.5-doc/config/http.html)
+* [Apache Tomcat 8 SSL/TLS Configuration How-To](https://tomcat.apache.org/tomcat-8.5-doc/ssl-howto.html)
 * [Run Tomcat on 80 Using Authbind in GCP](https://www.infiflex.com/run-tomcat-on-80-using-authbind-in-gcp)
-* [Apache Tomcat 8 (8.0.53) - SSL/TLS Configuration HOW-TO](https://tomcat.apache.org/tomcat-8.0-doc/ssl-howto.html)
-* [TUTO | How to install an SSL certificate on Tomcat 7?](https://www.httpcs.com/en/help/certificats/tutorial/how-to-install-an-ssl-certificate-on-tomcat)
-* [How to Install Tomcat 7 Server on Ubuntu or Debian](https://blog.perlubantuan.com/how-to-install-tomcat-7-server-on-ubuntu-or-debian/)
-
