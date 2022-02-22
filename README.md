@@ -70,7 +70,7 @@ nano /etc/default/tomcat7
 TOMCAT7_USER=tomcat8
 TOMCAT7_GROUP=tomcat8
 JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-JAVA_OPTS="-Xms320m -Xmx768m -XX:MaxPermSize=768m"
+JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -Xms320m -Xmx768m -XX:MaxPermSize=768m"
 ```
 
 > **NOTA**: Estos parámetros fueron pensados para un servidor o CT/VM corriendo con al menos 1Gb de memoria RAM.
@@ -95,10 +95,11 @@ systemctl restart tomcat8 postgresql
 
   > **NOTA**: Se deben incrementar primero los valores de los parámetros `Max-File Size` y `Max Request Size`, definidos por defecto en 50Mb. Para ello editar el fichero `/usr/share/tomcat8-admin/manager/WEB-INF/web.xml` y en la sección `<multipart-config>` establecer valores acordes al tamaño de la aplicación a desplegar, en el caso de `energux.war`, se recomienda definir `104857600` equivalente a 100Mb en ambos parámetros.
 
-- Definir usuario del sistema `tomcat8` como dueño del directorio de la aplicación.
+- Definir usuario del sistema `tomcat8` como dueño del directorio de la aplicación y reiniciar el servicio.
 
 ```bash
 chown –R tomcat8:tomcat8 /var/lib/tomcat8/webapps/energux/
+systemctl restart tomcat8
 ```
 
 - Completar el proceso de instalación a través de `http://ip-fqdn-servidor:8080/energux/app/instalar.jsf`.
