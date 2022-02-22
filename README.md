@@ -57,6 +57,10 @@ nano /usr/share/tomcat8/bin/setenv.sh
 JAVA_OPTS="-Xms320m -Xmx768m -XX:MaxPermSize=768m"
 ```
 
+```bash
+chmod +x /usr/share/tomcat8/bin/setenv.sh
+```
+
 o editar el fichero `/etc/default/tomcat8` como sigue:
 
 ```bash
